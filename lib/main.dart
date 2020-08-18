@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import 'answers.dart';
 
 main() => runApp(PerguntaApp());
 
-class PerguntaAppState extends State<PerguntaApp> {
-  var perguntaSelecionada = 0;
-  void eResponder() {
+class _PerguntaAppState extends State<PerguntaApp> {
+  var _perguntaSelecionada = 0;
+  void _eResponder() {
     setState(() {
-      perguntaSelecionada++;
+      _perguntaSelecionada++;
     });
-    print(perguntaSelecionada);
   }
 
   @override
   Widget build(BuildContext context) {
-    final perguntas = [
-      'Qual e sua cor favorita?',
-      'Qual seu animal favorido?',
+    final List<Map<String, Object>> perguntas = [
+      {
+        'texto': 'Qual e sua cor favorita?',
+        'respostas': ['Preto', 'Vermelho', 'Verde', 'Branco'],
+      },
+      {
+        'texto': 'Qual seu animal favorido?',
+        'respostas': ['Coelho', 'Cobra', 'Elefante', 'Leão'],
+      },
+      {
+        'texto': 'Qual seu instrutor favorido?',
+        'respostas': ['Maria', 'João', 'Leo', 'Pedro'],
+      }
     ];
     return MaterialApp(
       home: Scaffold(
@@ -24,19 +35,10 @@ class PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: <Widget>[
-            Text(perguntas[perguntaSelecionada]),
-            RaisedButton(
-              child: Text('Reposta 1'),
-              onPressed: eResponder,
-            ),
-            RaisedButton(
-              child: Text('Reposta 2'),
-              onPressed: eResponder,
-            ),
-            RaisedButton(
-              child: Text('Reposta 3'),
-              onPressed: eResponder,
-            ),
+            Question(perguntas[_perguntaSelecionada]['texto']),
+            Answers('Reposta 1', _eResponder),
+            Answers('Reposta 2', _eResponder),
+            Answers('Reposta 3', _eResponder),
           ],
         ),
       ),
@@ -45,7 +47,7 @@ class PerguntaAppState extends State<PerguntaApp> {
 }
 
 class PerguntaApp extends StatefulWidget {
-  PerguntaAppState createState() {
-    return PerguntaAppState();
+  _PerguntaAppState createState() {
+    return _PerguntaAppState();
   }
 }
